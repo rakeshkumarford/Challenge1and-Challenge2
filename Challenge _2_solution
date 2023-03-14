@@ -13,7 +13,7 @@ metadata:
 spec:
   containers:
   - name: container-a
-    image: your-image-name
+    image: image-name
     resources:
       requests:
         memory: "400Mi"
