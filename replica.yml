@@ -17,7 +17,7 @@ metadata:
 spec:
   containers:
   - name: container-b
-    image: your-image-name
+    image: image-name
     resources:
       requests:
         memory: "200Mi"
