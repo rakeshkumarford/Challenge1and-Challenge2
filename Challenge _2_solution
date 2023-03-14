@@ -23,7 +23,7 @@ metadata:
 spec:
   containers:
   - name: container-b
-    image: your-image-name
+    image: image-name
     resources:
       requests:
         memory: "200Mi"
@@ -35,7 +35,7 @@ metadata:
 spec:
   containers:
   - name: container-c
-    image: your-image-name
+    image: image-name
     resources:
       requests:
         memory: "400Mi"
