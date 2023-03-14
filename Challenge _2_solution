@@ -2,6 +2,7 @@ To deal with the resource crunch issue and ensure that POD A consumes 400 MB, PO
 
 Yaml file below :
 
+#######################################################################################################################################################################
 
 apiVersion: v1
 kind: Pod
@@ -63,6 +64,8 @@ spec:
   - name: data-volume
     configMap:
       name: sample-data
+######################################################################################################################################################################
+
 This YAML file will create three Pods, POD A, POD B, and POD C, with specific memory requirements. POD A will consume 400 MB, POD B will consume 200 MB, and POD C will consume 400 MB memory.
 
 The YAML file also creates a ConfigMap called sample-data, which contains the sample CSV file. The file is stored in the data field of the ConfigMap.
