@@ -1,0 +1,66 @@
+To automate the deployment of MediaWiki on Docker/K8/OpenShift, we can use infrastructure-as-code (IAC) tools like Terraform, Azure ARM Template, AWS CloudFormation, or GCP.
+
+I will be providing Terraform code that will create an instance of MediaWiki running on Docker, backed by a MySQL database running on a separate container.
+
+First, we need to create a Docker image for MediaWiki. We can use the official MediaWiki Docker image available on Docker Hub. The following Dockerfile will build the image:
+
+
+FROM mediawiki:latest
+Next, we can create a Terraform configuration file that will create the necessary infrastructure:
+
+bash
+Copy code
+# Configure the provider
+provider "docker" {
+  host = "tcp://localhost:2376/"
+}
+
+# Create the Docker image
+resource "docker_image" "mediawiki" {
+  name = "mediawiki"
+  build {
+    context = "."
+  }
+}
+
+# Create the MySQL container
+resource "docker_container" "mysql" {
+  name  = "mysql"
+  image = "mysql"
+  env = [
+    "MYSQL_ROOT_PASSWORD=secretpassword"
+  ]
+}
+
+# Create the MediaWiki container
+resource "docker_container" "mediawiki" {
+  name  = "mediawiki"
+  image = docker_image.mediawiki.latest
+  links = [
+    "${docker_container.mysql.name}:mysql"
+  ]
+  env = [
+    "MW_DB_HOST=mysql",
+    "MW_DB_USER=root",
+    "MW_DB_PASSWORD=secretpassword",
+    "MW_DB_NAME=mediawiki"
+  ]
+  ports {
+    internal = 80
+    external = 8080
+  }
+}
+This Terraform configuration file will:
+
+1. Use the Docker provider to create the necessary infrastructure.
+2. Build the MediaWiki Docker image using the Dockerfile.
+3. Create a MySQL container with a root password.
+4. Create a MediaWiki container linked to the MySQL container with the necessary environment variables.
+5, Expose port 8080 on the host machine to access MediaWiki.
+
+To deploy the infrastructure, run the following commands:
+
+terraform init
+terraform apply
+
+This will initialize the Terraform configuration and create the infrastructure. Once the infrastructure is created, you can access MediaWiki by navigating to http://localhost:8080 in your web browser.
