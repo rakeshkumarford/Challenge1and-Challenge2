@@ -7,10 +7,10 @@ First, we need to create a Docker image for MediaWiki. We can use the official M
 #######################################################################################################################################################################
 
 FROM mediawiki:latest
+
+#######################################################################################################################################################################
 Next, we can create a Terraform configuration file that will create the necessary infrastructure:
 
-bash
-Copy code
 # Configure the provider
 provider "docker" {
   host = "tcp://localhost:2376/"
