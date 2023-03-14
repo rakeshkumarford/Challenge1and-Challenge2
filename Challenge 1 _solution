@@ -61,9 +61,9 @@ This Terraform configuration file will:
 4. Create a MediaWiki container linked to the MySQL container with the necessary environment variables.
 5, Expose port 8080 on the host machine to access MediaWiki.
 
-To deploy the infrastructure, run the following commands:
+To deploy the infrastructure, execute below stndard commands:
 
 terraform init
 terraform apply
 
-This will initialize the Terraform configuration and create the infrastructure. Once the infrastructure is created, you can access MediaWiki by navigating to http://localhost:8080 in your web browser.
+This will initialize the Terraform configuration and create the infrastructure. Once the infrastructure is created, we can access MediaWiki by navigating to http://localhost:8080 in our web browser.
