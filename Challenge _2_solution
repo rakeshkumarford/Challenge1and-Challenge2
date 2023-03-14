@@ -1,0 +1,70 @@
+To deal with the resource crunch issue and ensure that POD A consumes 400 MB, POD B 200 MB, and POC C 400 MB memory, we can use Kubernetes/Openshift resource quotas and limits, please find the YAML code to create three replicas of Pods named POD A, POD B, and POD C, with specific memory requirements, and to make a sample CSV file available to the MediaWiki Pod:
+
+Yaml file below :
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-a
+spec:
+  containers:
+  - name: container-a
+    image: your-image-name
+    resources:
+      requests:
+        memory: "400Mi"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-b
+spec:
+  containers:
+  - name: container-b
+    image: your-image-name
+    resources:
+      requests:
+        memory: "200Mi"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-c
+spec:
+  containers:
+  - name: container-c
+    image: your-image-name
+    resources:
+      requests:
+        memory: "400Mi"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-data
+data:
+  sample.csv: |
+    column1,column2
+    value1,value2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mediawiki-pod
+spec:
+  containers:
+  - name: mediawiki-container
+    image: mediawiki-image
+    volumeMounts:
+    - name: data-volume
+      mountPath: /data
+  volumes:
+  - name: data-volume
+    configMap:
+      name: sample-data
+This YAML file will create three Pods, POD A, POD B, and POD C, with specific memory requirements. POD A will consume 400 MB, POD B will consume 200 MB, and POD C will consume 400 MB memory.
+
+The YAML file also creates a ConfigMap called sample-data, which contains the sample CSV file. The file is stored in the data field of the ConfigMap.
+
+Finally, the YAML file creates a MediaWiki Pod that uses the sample-data ConfigMap to make the sample CSV file available to the running application Pod. The sample CSV file is mounted to the /data directory inside the container using a volume mount.
