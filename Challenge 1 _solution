@@ -1,9 +1,10 @@
-To automate the deployment of MediaWiki on Docker/K8/OpenShift, we can use infrastructure-as-code (IAC) tools like Terraform, Azure ARM Template, AWS CloudFormation, or GCP.
+To automate the deployment of MediaWiki on Docker/K8, we can use infrastructure-as-code (IAC) - Terraform.
 
-I will be providing Terraform code that will create an instance of MediaWiki running on Docker, backed by a MySQL database running on a separate container.
+Below is the Terraform code that will create an instance of MediaWiki running on Docker, backed by a MySQL database running on a separate container.
 
 First, we need to create a Docker image for MediaWiki. We can use the official MediaWiki Docker image available on Docker Hub. The following Dockerfile will build the image:
 
+#######################################################################################################################################################################
 
 FROM mediawiki:latest
 Next, we can create a Terraform configuration file that will create the necessary infrastructure:
@@ -50,6 +51,8 @@ resource "docker_container" "mediawiki" {
     external = 8080
   }
 }
+
+#######################################################################################################################################################################
 This Terraform configuration file will:
 
 1. Use the Docker provider to create the necessary infrastructure.
